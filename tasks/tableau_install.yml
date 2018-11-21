@@ -1,0 +1,15 @@
+---
+
+- name: Install a tableau package from the internet.
+  apt:
+    deb: "{{ tableau_download_deb_url }}"
+    update_cache: yes
+
+- name: Find script directory
+  shell: "ls /opt/tableau/tableau_server/packages/ | grep script"
+  register: tsm
+
+- name: Initialize TSM
+  command: /opt/tableau/tableau_server/packages/{{ tsm.stdout }}/initialize-tsm --accepteula
+  become: yes
+  ignore_errors: True

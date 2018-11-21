@@ -1,0 +1,29 @@
+---
+
+- name: Add password for user ubuntu
+  user:
+    name: ubuntu
+    group: tsmadmin
+    state: present
+    password: "{{ tableau_server.tsm_password | password_hash('sha512') }}"
+  tags: [ "register-tableau" , "set-admin-password"]
+
+- name: Add password for user ubuntu
+  command: "{{ tsm_executable }} licenses activate -k {{ tableau_server.initial_license_key }} -u {{ tableau_user }} --password {{ tableau_server.tsm_password }}" 
+  tags: [ "register-tableau", "activate-license" ]
+
+
+- name: Copy Tableau Registration File 
+  template:
+    src: registration_file.json.j2
+    dest: /home/ubuntu/registration_file.json
+    owner: ubuntu
+    group: tsmadmin
+    mode: 0644
+  tags: [ "register-tableau", "register-tableau" ]
+
+- name: Register Tableau Server
+  command: "{{ tsm_executable }} register --file /home/ubuntu/registration_file.json -u {{ tableau_user }} --password {{ tableau_server.tsm_password }}"
+  tags: [ "register-tableau", "register-tableau" ]
+
+...

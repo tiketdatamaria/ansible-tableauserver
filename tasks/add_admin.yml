@@ -1,0 +1,3 @@
+- name: Add an Administrator Account
+  command: "{{ tabcmd_executable }} initialuser ‑‑server 'http://localhost' --username '{{ init_admin_user }}' --password '{{ tableau_server.init_admin_pass }}'"
+  tags: [ "add-admin", "init-admin" ]

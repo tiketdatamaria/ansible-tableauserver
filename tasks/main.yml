@@ -1,0 +1,14 @@
+---
+
+- name: Install Tableau Server
+  import_tasks: tableau_install.yml
+  when: inventory_hostname == 'tableau-node-1'
+
+- name: Register Tableau Server
+  import_tasks: register_tableau.yml
+
+- name: Configure Initial Node
+  import_tasks: configure_initial.yml
+
+- name: Add an Administrator Account
+  import_tasks: add_admin.yml

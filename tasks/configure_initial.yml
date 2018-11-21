@@ -1,0 +1,24 @@
+---
+
+- name: Copy Identity Store File
+  template:
+    src: identity_store.json.j2
+    dest: /home/ubuntu/identity_store.json
+    owner: ubuntu
+    group: tsmadmin
+    mode: 0644
+  tags: [ "config-initial", "config-identity-store" ]
+
+- name: Configure Identity Store
+  command: "{{ tsm_executable }} settings import -f /home/ubuntu/identity_store.json -u {{ tableau_user }} --password {{ tableau_server.tsm_password }}"
+  tags: [ "config-initial", "config-identity-store" ]
+
+- name: Apply Configuration Changes
+  command: "{{ tsm_executable }} pending-changes apply -u {{ tableau_user }} --password {{ tableau_server.tsm_password }}"
+  tags: [ "config-initial", "config-identity-store" ]
+
+- name: Initialize and start Tableau Server
+  command: "{{ tsm_executable }} initialize --start-server --request-timeout 1800 -u {{ tableau_user }} --password {{ tableau_server.tsm_password }}"
+  tags: [ "config-initial", "initialize-start-server" ]
+
+...
