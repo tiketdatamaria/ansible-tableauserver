@@ -1,0 +1,25 @@
+- name: Copy certificate file
+  template:
+    src: tiket_com.crt.j2
+    dest: /home/ubuntu/tiket_com.crt
+    owner: ubuntu
+    group: tsmadmin
+    mode: 0644
+  tags: [ "config-ssl", "copy-cert" ]
+
+- name: Copy ssl key file
+  template:
+    src: server.key.j2
+    dest: /home/ubuntu/server.key
+    owner: ubuntu
+    group: tsmadmin
+    mode: 0644
+  tags: [ "config-ssl", "copy-ssl-key" ]
+
+- name: Activate tableau ssl
+  command: "{{ tsm_executable }} security external-ssl enable -cert-file /home/{{ tableau_user }}/tiket_com.crt --key-file /home/{{ tableau_user }}/server.key"
+  tags: [ "config-ssl", "activate-ssl" ]
+
+- name: Apply pending changes
+  command: "{{ tsm_executable }} pending-changes apply --ignore-prompt"
+  tags: [ "config-ssl", "apply-changes" ]

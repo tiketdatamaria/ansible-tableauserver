@@ -10,6 +10,13 @@
   register: tsm
 
 - name: Initialize TSM
-  command: /opt/tableau/tableau_server/packages/{{ tsm.stdout }}/initialize-tsm --accepteula
+  command: "/opt/tableau/tableau_server/packages/{{ tsm.stdout }}/initialize-tsm --accepteula"
   become: yes
+  when: inventory_hostname in groups["tableau-cluster-initial"]
+  ignore_errors: True
+
+- name: Initialize TSM
+  command: "/opt/tableau/tableau_server/packages/{{ tsm.stdout }}/initialize-tsm /home/ubuntu/bootstrap.json -u ubuntu --accepteula"
+  become: yes
+  when: inventory_hostname in groups["tableau-cluster-additional"]
   ignore_errors: True

@@ -1,0 +1,19 @@
+---
+
+- name: Check bootstrap file is exist
+  stat:
+    path: /home/ubuntu/bootstrap.json
+  register: boostrap_file
+  tags: ["bootstrap", "check-bootstrap", "cluster"]
+
+- name: Copy bootstrap to additional node
+  synchronize:
+    src: /home/ubuntu/bootstrap.json
+    dest: /home/ubuntu/bootstrap.json
+#    mode: pull
+    rsync_opts:
+      - "--rsh='-i /home/ubuntu/.ssh/key.pem'"
+#  delegate_to: dev-tableau-cluster-2
+  when: boostrap_file.stat.exists == False
+  tags: ["bootstrap", "copy-bootstrap", "cluster"]
+...

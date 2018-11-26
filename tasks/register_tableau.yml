@@ -8,8 +8,9 @@
     password: "{{ tableau_server.tsm_password | password_hash('sha512') }}"
   tags: [ "register-tableau" , "set-admin-password"]
 
-- name: Add password for user ubuntu
-  command: "{{ tsm_executable }} licenses activate -k {{ tableau_server.initial_license_key }} -u {{ tableau_user }} --password {{ tableau_server.tsm_password }}" 
+- name: activate licenses
+  #command: "{{ tsm_executable }} licenses activate -k {{ tableau_server.initial_license_key }} -u {{ tableau_user }} --password {{ tableau_server.tsm_password }}" 
+  command: "{{ tsm_executable }} licenses activate -t -u {{ tableau_user }} --password {{ tableau_server.tsm_password }}"
   tags: [ "register-tableau", "activate-license" ]
 
 

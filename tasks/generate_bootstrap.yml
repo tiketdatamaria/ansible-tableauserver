@@ -1,0 +1,14 @@
+---
+
+- name: Check bootstrap file is exist
+  stat:
+    path: /home/ubuntu/bootstrap.json
+  register: boostrap_file
+  tags: ["bootstrap", "check-bootstrap", "cluster"]
+
+- name: Generate bootstrap from initial node
+  command: "{{ tsm_executable }} topology nodes get-bootstrap-file --file bootstrap.json"
+  tags: ["bootstrap", "generate-bootstrap", "cluster"]
+  when: boostrap_file.stat.exists == False
+
+...

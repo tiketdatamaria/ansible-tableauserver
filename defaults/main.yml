@@ -10,7 +10,7 @@ tsm_executable: "/opt/tableau/tableau_server/packages/customer-bin.20183.18.1019
 tabcmd_executable: "/opt/tableau/tableau_server/packages/customer-bin.20183.18.1019.1426/tabcmd"
 
 tableau_user: "ubuntu"
-vault_file: "vault.yml"
+vault_file: ".vault"
 
 init_admin_user: "tableau_admin"
 
