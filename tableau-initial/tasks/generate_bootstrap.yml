@@ -11,4 +11,10 @@
   tags: ["bootstrap", "generate-bootstrap", "cluster"]
   when: boostrap_file.stat.exists == False
 
+- name: Copy bootstrap to local
+  fetch:
+    src: /home/ubuntu/bootstrap.json
+    dest: "{{ playbook_dir }}/roles/tableau-additional/templates/bootstrap.json.j2"
+    flat: yes
+  tags: ["bootstrap", "copy-bootstrap-to-local"]
 ...

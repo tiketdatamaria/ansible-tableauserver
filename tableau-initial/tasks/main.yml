@@ -4,20 +4,15 @@
 
 - name: Register Tableau Server
   import_tasks: register_tableau.yml
-  when: inventory_hostname in groups["tableau-cluster-initial"]
 
 - name: Configure Initial Node
   import_tasks: configure_initial.yml
-  when: inventory_hostname in groups["tableau-cluster-initial"]
 
 - name: Add an Administrator Account
   import_tasks: add_admin.yml
-  when: inventory_hostname in groups["tableau-cluster-initial"]
 
 - name: Configure SSL
   import_tasks: configure_ssl.yml
-  when: inventory_hostname in groups["tableau-cluster-initial"]
 
 - name: Generate bootstrap
   import_tasks: generate_bootstrap.yml
-  when: inventory_hostname in groups["tableau-cluster-initial"]

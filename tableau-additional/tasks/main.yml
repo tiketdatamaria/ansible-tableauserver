@@ -1,0 +1,12 @@
+---
+- name: Copy Bootstrap to Additional Node
+  template:
+    src: bootstrap.json.j2
+    dest: /home/ubuntu/bootstrap.json
+    owner: ubuntu
+    group: ubuntu
+    mode: 0644
+  tags: [ "copy-bootstrap-to-additional" ]
+
+- name: Install Tableau Server
+  import_tasks: tableau_install.yml

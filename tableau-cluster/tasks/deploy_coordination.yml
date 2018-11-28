@@ -1,0 +1,23 @@
+- name: Stop TSM Service
+  command: "{{ tsm_executable }} stop -u {{ tableau_user }} --password {{ tableau_server.tsm_password }}"
+  tags: [ "deploy_coordination", "tsm-stop" ]
+
+- name: deploy the Coordination Service to all three nodes of a three-node cluster
+  command: "{{ tsm_executable }} topology deploy-coordination-service -n node1,node2,node3 -u {{ tableau_user }} --password {{ tableau_server.tsm_password }}"
+  tags: [ "deploy_coordination", "deploy-core" ]
+
+- name: Pause for 1 minutes
+  pause:
+    minutes: 1
+
+- name: Stop TSM Service
+  command: "{{ tsm_executable }} stop -u {{ tableau_user }} --password {{ tableau_server.tsm_password }}"
+  tags: [ "deploy_coordination", "tsm-stop" ]
+
+- name: Cleanup Coordination Service
+  command: "{{ tsm_executable }} topology cleanup-coordination-service -u {{ tableau_user }} --password {{ tableau_server.tsm_password }}"
+  tags: [ "deploy_coordination", "cleanup-coordiantion" ]
+
+- name: Start TSM Service
+  command: "{{ tsm_executable }} start -u {{ tableau_user }} --password {{ tableau_server.tsm_password }}"
+  tags: [ "deploy_coordination", "tsm-start" ]

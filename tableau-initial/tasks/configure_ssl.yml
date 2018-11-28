@@ -17,9 +17,9 @@
   tags: [ "config-ssl", "copy-ssl-key" ]
 
 - name: Activate tableau ssl
-  command: "{{ tsm_executable }} security external-ssl enable -cert-file /home/{{ tableau_user }}/tiket_com.crt --key-file /home/{{ tableau_user }}/server.key"
+  command: "{{ tsm_executable }} security external-ssl enable -cert-file /home/{{ tableau_user }}/tiket_com.crt --key-file /home/{{ tableau_user }}/server.key --username {{ tableau_user }} --password {{ tableau_server.tsm_password }}"
   tags: [ "config-ssl", "activate-ssl" ]
 
 - name: Apply pending changes
-  command: "{{ tsm_executable }} pending-changes apply --ignore-prompt"
+  command: "{{ tsm_executable }} pending-changes apply --username {{ tableau_user }} --password {{ tableau_server.tsm_password }} --ignore-prompt"
   tags: [ "config-ssl", "apply-changes" ]
