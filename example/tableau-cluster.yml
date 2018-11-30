@@ -1,0 +1,32 @@
+---
+
+- name: Install tableau server
+  hosts: tableau-cluster-initial
+  remote_user: someuser
+  become_method: sudo
+  become: yes
+  vars_files:
+    - "{{ vault_file }}"
+  roles:
+    - tableau-initial
+
+- name: Install tableau cluster
+  hosts: tableau-cluster-additional
+  remote_user: someuser
+  become_method: sudo
+  become: yes
+  vars_files:
+    - "{{ vault_file }}"
+  roles:
+    - tableau-additional
+
+- name: Config Tableau Cluster
+  hosts: tableau-cluster-initial
+  remote_user: someuser
+  become_method: sudo
+  become: yes
+  vars_files:
+    - "{{ vault_file }}"
+  roles:
+    - tableau-cluster 
+...

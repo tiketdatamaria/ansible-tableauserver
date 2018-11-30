@@ -6,13 +6,8 @@
   command: "{{ tsm_executable }} topology deploy-coordination-service -n node1,node2,node3 -u {{ tableau_user }} --password {{ tableau_server.tsm_password }}"
   tags: [ "deploy_coordination", "deploy-core" ]
 
-- name: Pause for 1 minutes
-  pause:
-    minutes: 1
-
-- name: Stop TSM Service
-  command: "{{ tsm_executable }} stop -u {{ tableau_user }} --password {{ tableau_server.tsm_password }}"
-  tags: [ "deploy_coordination", "tsm-stop" ]
+- name: Exterminate mankind
+  pause: prompt='Please confirm you want to exterminate mankind! Press return to continue. Press Ctrl+c and then "a" to abort'
 
 - name: Cleanup Coordination Service
   command: "{{ tsm_executable }} topology cleanup-coordination-service -u {{ tableau_user }} --password {{ tableau_server.tsm_password }}"

@@ -1,0 +1,5 @@
+[tableau-cluster-initial]
+dev-tableau-cluster-1 ansible_host=x.x.x.x ansible_user=someuser
+[tableau-cluster-additional]
+dev-tableau-cluster-2 ansible_host=x.x.x.x ansible_user=someuser
+dev-tableau-cluster-3 ansible_host=x.x.x.x ansible_user=someuser
