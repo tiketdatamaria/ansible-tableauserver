@@ -1,4 +1,4 @@
-# Ansible Role: HAProxy
+# Ansible Role: Tableau Server
 
 Installs Tableau Server on Debian/Ubuntu Linux servers.
 
